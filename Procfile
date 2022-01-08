@@ -1,1 +1,1 @@
-web uvicorn main:app --reloadc --port $PORT
+web uvicorn main:app --reload --port $PORT

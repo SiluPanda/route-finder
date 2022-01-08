@@ -34,7 +34,7 @@ def get_direction(source_latitude: str,
                     else:
                         points = step.get('polyline', {})
                         if 'points' in points:
-                            print(points)
+                            
                             coords = polyline.decode(points['points'])
                             path.extend([{'lat': x[0], 'lng': x[1]} for x in coords])
 

@@ -1,1 +1,1 @@
-web uvicorn main:app --reload --port=${PORT:-9989}
+web python3 main.py

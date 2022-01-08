@@ -12,7 +12,3 @@ app.include_router(router.router, prefix="")
 @app.get('/ping')
 def ping():
     return "server is healthy"
-
-
-if __name__ == '__main__':
-    uvicorn.run("main:app", host="127.0.0.1",port=int(os.environ['PORT']))

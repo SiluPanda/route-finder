@@ -51,7 +51,7 @@ app.get('/directions', (request, response, next) => __awaiter(void 0, void 0, vo
                     for (let step of steps) {
                         let currPaths = google_polyline_1.default.decode(step.polyline.points);
                         for (let currPath of currPaths) {
-                            path.push(currPath);
+                            path.push({ lat: currPath[0], lng: currPath[1] });
                         }
                     }
                 }
@@ -71,5 +71,5 @@ app.use(function (err, req, res, next) {
         });
     });
 });
-app.listen(process.env.port || 9989, () => console.log("server started"));
+app.listen(process.env.PORT || 9989, () => console.log("server started"));
 //# sourceMappingURL=index.js.map

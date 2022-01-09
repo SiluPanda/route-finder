@@ -18,6 +18,11 @@ app.get('/ping', async (req: Request, res: Response, next: NextFunction) => {
     }
 })
 
+type Point = {
+    lat: Number;
+    lng: Number;
+}
+
 app.get('/directions', async (request: Request, response: Response, next: NextFunction) => {
     try {
         const sLat: string = (request.query.source_latitude || '').toString()
@@ -36,7 +41,7 @@ app.get('/directions', async (request: Request, response: Response, next: NextFu
             }
         })).data
 
-        let path = []
+        let path: Point[] = []
         if (direction.routes.length > 0) {
             let route = direction.routes[0]
             if (route.legs) {
@@ -45,7 +50,7 @@ app.get('/directions', async (request: Request, response: Response, next: NextFu
                     for (let step of steps) {
                         let currPaths = polyline.decode(step.polyline.points)
                         for (let currPath of currPaths) {
-                            path.push(currPath)
+                            path.push({ lat: currPath[0], lng: currPath[1] })
                         }
                     }
                 }

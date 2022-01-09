@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const google_maps_services_js_1 = require("@googlemaps/google-maps-services-js");
 const google_polyline_1 = __importDefault(require("google-polyline"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const fs_1 = __importDefault(require("fs"));
+dotenv_1.default.config();
 const gmap = new google_maps_services_js_1.Client({});
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -39,7 +42,7 @@ app.get('/directions', (request, response, next) => __awaiter(void 0, void 0, vo
                 origin: `${sLat},${sLng}`,
                 destination: `${dLat},${dLng}`,
                 optimize: false,
-                key: "AIzaSyAEQvKUVouPDENLkQlCF6AAap1Ze-6zMos"
+                key: process.env.APIKEY
             }
         })).data;
         let path = [];
@@ -57,6 +60,14 @@ app.get('/directions', (request, response, next) => __awaiter(void 0, void 0, vo
                 }
             }
         }
+        let coordscsv = '';
+        for (let point of path) {
+            coordscsv += point.lat + ',' + point.lng + '\n';
+        }
+        fs_1.default.writeFile('hello.csv', coordscsv, (err) => {
+            if (err)
+                console.log("could not write csv");
+        });
         return response.send(path);
     }
     catch (err) {

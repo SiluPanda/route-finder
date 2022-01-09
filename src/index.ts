@@ -1,7 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { Client } from '@googlemaps/google-maps-services-js'
 import polyline from 'google-polyline'
+import dotenv from 'dotenv'
+import fs from 'fs'
 
+dotenv.config()
 
 const gmap = new Client({})
 
@@ -18,7 +21,7 @@ app.get('/ping', async (req: Request, res: Response, next: NextFunction) => {
     }
 })
 
-type Point = {
+interface Point {
     lat: Number;
     lng: Number;
 }
@@ -37,7 +40,7 @@ app.get('/directions', async (request: Request, response: Response, next: NextFu
                 origin: `${sLat},${sLng}`,
                 destination: `${dLat},${dLng}`,
                 optimize: false,
-                key: "AIzaSyAEQvKUVouPDENLkQlCF6AAap1Ze-6zMos"
+                key: process.env.APIKEY
             }
         })).data
 
@@ -56,6 +59,14 @@ app.get('/directions', async (request: Request, response: Response, next: NextFu
                 }
             }
         }
+        let coordscsv = ''
+        
+        for (let point of path) {
+            coordscsv += point.lat + ',' + point.lng + '\n'
+        }
+        fs.writeFile('hello.csv', coordscsv, (err) => {
+            if (err) console.log("could not write csv")
+        })
         return response.send(path)
     } catch (err) {
         next(err)

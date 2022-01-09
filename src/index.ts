@@ -65,4 +65,4 @@ app.use(async function(err: Error, req: Request, res: Response, next: NextFuncti
 
 })
 
-app.listen(process.env.port || 9989, () => console.log("server started"))
+app.listen(process.env.PORT || 9989, () => console.log("server started"))

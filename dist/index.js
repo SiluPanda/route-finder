@@ -49,7 +49,10 @@ app.get('/directions', (request, response, next) => __awaiter(void 0, void 0, vo
                 for (let leg of route.legs) {
                     let steps = leg.steps;
                     for (let step of steps) {
-                        path.push(google_polyline_1.default.decode(step.polyline.points));
+                        let currPaths = google_polyline_1.default.decode(step.polyline.points);
+                        for (let currPath of currPaths) {
+                            path.push(currPath);
+                        }
                     }
                 }
             }

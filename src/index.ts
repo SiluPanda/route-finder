@@ -43,7 +43,10 @@ app.get('/directions', async (request: Request, response: Response, next: NextFu
                 for (let leg of route.legs) {
                     let steps = leg.steps
                     for (let step of steps) {
-                        path.push(polyline.decode(step.polyline.points))
+                        let currPaths = polyline.decode(step.polyline.points)
+                        for (let currPath of currPaths) {
+                            path.push(currPath)
+                        }
                     }
                 }
             }

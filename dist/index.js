@@ -34,7 +34,6 @@ app.get('/directions', (request, response, next) => __awaiter(void 0, void 0, vo
         const sLng = (request.query.source_longitude || '').toString();
         const dLat = (request.query.destination_latitude || '').toString();
         const dLng = (request.query.destination_longitude || '').toString();
-        console.log(sLat, sLng, dLat, dLng);
         let direction = (yield gmap.directions({
             params: {
                 origin: `${sLat},${sLng}`,
